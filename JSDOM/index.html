@@ -45,8 +45,34 @@
     <input type="checkbox" name="hobby" value="Gaming"> Gaming -->
     <!-- <button onclick="userClick()">คลิก</button>
     <div onclick="divCilck()">คลิก div</div> -->
-    <input type="radio" name="gender" value="Male" onchange="changeGender()" checked="true">Male
-    <input type="radio" name="gender" value="Female" onchange="changeGender()" >Female
+    <!-- <input type="radio" name="gender" value="Male" onchange="changeGender()" checked="true">Male
+    <input type="radio" name="gender" value="Female" onchange="changeGender()" >Female -->
+
+
+    <!-- ชื่อ <input type="text" name="fname" id="nameInput" onkeyup="changeFname()"/> -->
+
+
+    <!-- <div onmouseover="OverItem()" 
+        onmouseup="UpItem()"
+        onmousedown="DownItem()">Click</div> -->
+
+        <!-- <div id="hi">Hi <span style="display: none;">A</span></div> -->
+         <h1>งานอดิเรก</h1>
+        <div id="content"></div>
+        <!--
+        <ul>
+            <li>อ่านหนังสือ</li>
+            <li>ว่ายน้ำ</li>
+            <li>เล่นเกม/li>
+        </ul>
+        -->
+
+
+        <input type="checkbox" name="hobby" value = "reading" id=""> อ่านหนังสือ
+        <input type="checkbox" name="hobby" value = "swimming" id=""> ว่ายน้ำ
+        <input type="checkbox" name="hobby" value = "gaming" id=""> เล่นเกม
+        <button onclick="submitHobby()">Submit</button>
+
         <script >
             // let inputsDOM = document.getElementsByClassName("input");
             // console.log(inputsDOM);
@@ -69,18 +95,67 @@
             //     console.log("div Cilck!");
             // }
             
-                function changeGender(){
-                    // console.log("Gender change!");
+                // function changeGender(){
+                //     // console.log("Gender change!");
 
-                    //เลือก input ทุกอันออกมา
-                    let gendersInputs = document.querySelectorAll('input[name="gender"]');
-                    // ใคร checked อยู่บ้าง = เพศโดนเลือกอยู่
-                    for(let i=0;i<gendersInputs.length;i++){
-                        if(gendersInputs[i].checked){
-                            console.log("Gender selected : "+gendersInputs[i].value);
+                //     //เลือก input ทุกอันออกมา
+                //     let gendersInputs = document.querySelectorAll('input[name="gender"]');
+                //     // ใคร checked อยู่บ้าง = เพศโดนเลือกอยู่
+                //     for(let i=0;i<gendersInputs.length;i++){
+                //         if(gendersInputs[i].checked){
+                //             console.log("Gender selected : "+gendersInputs[i].value);
+                //         }
+                //     }
+                    
+                // }
+
+
+                // onKeyDown กดปุ่มคีย์บอร์ด
+                //onKeyUp ปล่อยปุ่มคีย์บอร์ด
+                //onkeypress กดปุ่มคีย์บอร์ดค้างไว้
+                // function changeFname(){
+
+                //     console.log("Key down event detected");
+
+                //     //เลือก input element
+                //     let inputElement = document.querySelector('input[name="fname"]');
+                //     //ดึงค่า value ออกมา
+                //     console.log(inputElement.value);
+
+                // }
+
+                // function OverItem(){
+                //     console.log("Mouse Over Detected");
+                // }
+                // function UpItem(){
+                //     console.log("Mouse up Detected");
+                // }
+                // function DownItem(){
+                //     console.log("Mouse down Detected");
+                // }
+                
+                // let hiDom = document.getElementById("hi");
+                // hiDom.innerHTML = "Hi<b>B</b>";
+                // console.log(hiDom.textContent);
+                // console.log(hiDom.innerText);
+                // console.log(hiDom.innerHTML);
+
+
+                function submitHobby(){
+                    //เลือก ไปยัง Checkbox ที่มี name เป็น Hooby ทั้งหมด
+                    let hobbies = document.querySelectorAll('input[name="hobby"]');
+                    let contentHTML = '<ul>'
+                    //เอาค่าที่เลือก ออกมา
+                    for(let i =0;i<hobbies.length;i++){
+                        if(hobbies[i].checked){
+                            contentHTML += '<li>' + hobbies[i].value + '</li>';
                         }
                     }
-                    
+
+                    //;นค่าที่เลือก มาแสดงในรูปแบบ ul li ใส่ HTML
+                    contentHTML += '<ul>';
+                    let contentDiv = document.getElementById('content');
+                    contentDiv.innerHTML = contentHTML;
                 }
         </script>
 </body>
