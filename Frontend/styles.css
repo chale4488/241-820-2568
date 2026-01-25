@@ -1,0 +1,136 @@
+/* ตั้งค่าพื้นฐานและฟอนต์ (แนะนำให้นำเข้า Google Fonts ถ้าต้องการสวยขึ้น) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* ฟอนต์มาตรฐานที่อ่านง่าย */
+    background-color: #f4f7f6; /* สีพื้นหลังหน้าเว็บ */
+    display: flex;
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    min-height: 100vh; /* ความสูงเต็มหน้าจอ */
+}
+
+/* กล่องหลักของฟอร์ม (Container) */
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px; /* ความกว้างสูงสุดไม่เกิน 500px */
+    padding: 30px;
+    border-radius: 10px; /* มุมโค้งมน */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* เงาให้ดูลอยขึ้น */
+}
+
+/* หัวข้อฟอร์ม */
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* การจัดวางแบบ Flex (สำหรับบรรทัดที่มีคลาส flex) */
+.flex {
+    display: flex;
+    align-items: center; /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+    flex-wrap: wrap; /* ให้ตกบรรทัดได้ถ้าจอเล็ก */
+}
+
+/* ระยะห่างของแต่ละช่องกรอกข้อมูล */
+.form-input {
+    margin-bottom: 15px;
+}
+
+/* หัวข้อของแต่ละช่อง (Label) */
+.header-form {
+    min-width: 100px; /* ความกว้างขั้นต่ำของป้ายชื่อเพื่อให้ Input ตรงกัน */
+    font-weight: 600;
+    color: #555;
+    margin-right: 10px;
+}
+
+/* ช่องกรอกข้อมูล (Input Text, Number) */
+.form {
+    flex: 1; /* ให้ขยายเต็มพื้นที่ที่เหลือ */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form:focus {
+    border-color: #007bff; /* เปลี่ยนสีขอบเมื่อคลิก */
+    outline: none;
+}
+
+/* ส่วนของเพศ (Radio Buttons) */
+.gender .flex div {
+    margin-right: 15px; /* ระยะห่างระหว่างตัวเลือกเพศ */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.gender input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* ส่วนของงานอดิเรก (Checkbox) */
+.form-input > div {
+    margin-top: 5px;
+    margin-left: 0; /* หรือปรับตามต้องการ */
+    display: flex;
+    align-items: center;
+}
+
+.form-input input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* พื้นที่ข้อความ (Textarea) */
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; /* ให้ยืดขยายได้เฉพาะแนวตั้ง */
+    font-family: inherit;
+    margin-top: 5px;
+}
+
+/* จัดปุ่มกึ่งกลาง */
+.center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* ปุ่มส่งข้อมูล */
+.button {
+    background-color: #007bff; /* สีปุ่ม */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 25px; /* ปุ่มมน */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: #0056b3; /* สีเข้มขึ้นเมื่อเอาเมาส์ชี้ */
+}
+
+.button:active {
+    transform: scale(0.98); /* ย่อลงเล็กน้อยเมื่อคลิก */
+}
