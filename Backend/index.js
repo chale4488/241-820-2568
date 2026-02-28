@@ -45,6 +45,28 @@ app.get('/users', async (req,res) => {
     res.json(results[0]);
 })
 
+app.get('/users/:id',async (req,res)=>{
+    try{
+        let id = req.params.id;
+        const results = await conn.query('SELECT * FROM users WHERE id = ?',id);
+        if (results[0].length == 0){
+            throw { statusCode: 404,message:'User not found'}
+        }
+        res.json(results[0][0]);
+    }catch (error){
+        console.error('Error fetching user:',error.message);
+        let statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            message:'Error fetching user',
+            error:error.message
+        });
+    }
+})
+
+
+
+
+
 
 
 // app.get('/testdb',(req,res)=>{
@@ -86,10 +108,10 @@ app.get('/users', async (req,res) => {
 // })
 
 
-//path = GET /users
-app.get('/users',  (req, res) => {
-    res.json(users);
-});
+// path = GET /users
+// app.get('/users',  (req, res) => {
+//     res.json(users);
+// });
 
 //path = POST /user
 // app.post('/user', (req, res) => {
@@ -102,56 +124,113 @@ app.get('/users',  (req, res) => {
 //         user: user });
 // })
 
+
 //path new post
 app.post('/users',async (req,res) => {
-    let user = req.body;
-    const results = await conn.query('INSERT INTO users SET ?',user);
-    console.log('results: ',results)
-    res.json({ 
-        message: 'User created successfully', 
-        data: results[0]
+    try{
+        let user = req.body;
+        const results = await conn.query('INSERT INTO users SET ?',user);
+        console.log('results: ',results)
+        res.json({ 
+            message: 'User created successfully', 
+            data: results[0]
+            });
+    }catch (error){
+        console.error('Error creating user: ',error);
+        res.status(500).json({
+            message:' Error creating user',
+            error:error.message
         });
-})
+    }
+});
+
+
 
 //path = put/user/:id
-app.patch('/user/:id',(req,res)=>{
-    let id = req.params.id;
-    let updatedUser = req.body;
-    //user จาก id ที่ส่งมา
-    let selectIndex = users.findIndex(user => user.id == id);
-    //อัพเดตข้อมูล user
-    if(updatedUser.name){
-        users[selectIndex].name = updatedUser;
-    }
-    if(updatedUser.age){
-        user[selectIndex].age = updatedUser;
-    }
-    // users[selectIndex].name = updatedUser.name || users[selectIndex].name;
-    // users[selectIndex].age = updatedUser.age || users[selectIndex].age;
+// app.patch('/user/:id',(req,res)=>{
+//     let id = req.params.id;
+//     let updatedUser = req.body;
+//     //user จาก id ที่ส่งมา
+//     let selectIndex = users.findIndex(user => user.id == id);
+//     //อัพเดตข้อมูล user
+//     if(updatedUser.name){
+//         users[selectIndex].name = updatedUser;
+//     }
+//     if(updatedUser.age){
+//         user[selectIndex].age = updatedUser;
+//     }
+//     // users[selectIndex].name = updatedUser.name || users[selectIndex].name;
+//     // users[selectIndex].age = updatedUser.age || users[selectIndex].age;
 
 
-    //เอาข้อมูลที่ update ส่ง response กลับไป
+//     //เอาข้อมูลที่ update ส่ง response กลับไป
 
-    res.json({message: 'User added successfully', 
-        data:{
-            user:updatedUser,
-            indexUpdated: selectIndex
+//     res.json({message: 'User added successfully', 
+//         data:{
+//             user:updatedUser,
+//             indexUpdated: selectIndex
+//         }
+//     });
+// })
+
+
+app.put('/users/:id',async (req,res)=>{
+    try{
+        let id = req.params.id;
+        let updatedUser = req.body;
+        const results = await conn.query('UPDATE users SET ? WHERE id = ? ',[updatedUser,id]);
+        if(results[0].affectedRows == 0){
+            throw { statusCode: 404,message:'User not found'};
         }
-    });
+        res.json({
+            message:'User updated successfully',
+            data: updatedUser
+        });
+    }catch(error){
+        console.error('Error updateing user:',error.message);
+        let statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            message:'Error updating user',
+            error: error.message
+        });
+    }
+
 })
 
+
+
 //Path = DELETE /user/:id
-app.delete('/user/:id',(req,res)=>{
-    let id = req.params.id;
-    //หา id ที่ต้องการลบ
-    let selectIndex = users.findIndex(user => user.id == id);
-    //ลบ user จาก arr
-    users.splice(selectIndex,1)
+// app.delete('/user/:id',(req,res)=>{
+//     let id = req.params.id;
+//     //หา id ที่ต้องการลบ
+//     let selectIndex = users.findIndex(user => user.id == id);
+//     //ลบ user จาก arr
+//     users.splice(selectIndex,1)
     
-    res.json({
-        message:'User deleted successfully',
-        indexDeleted:selectIndex
-    });
+//     res.json({
+//         message:'User deleted successfully',
+//         indexDeleted:selectIndex
+//     });
+// })
+
+app.delete('/users/:id',async (req,res)=>{
+    try{
+        let id = req.params.id;
+        const results = await conn.query('DELETE FROM users WHERE id = ? ',id);
+        if(results[0].affectedRows ==0){
+            throw { statusCode: 404 ,message:'User not found'};
+        }
+        res.json({
+            message:'User deleted successfully'
+        })
+    }catch (error){
+        console.error('Error deleting user: ',error.message);
+        let statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            message:'Error deleting user',
+            error: error.message
+        }); 
+    }
 })
 
 app.listen(port,async()=>{
