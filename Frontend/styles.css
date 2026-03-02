@@ -4,7 +4,26 @@
     margin: 0;
     padding: 0;
 }
-
+.message{
+    color: black;
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 10px;
+    display: none;  
+}
+.message.success{
+    background-color: green;
+    color: white;
+    text-align: center;
+    display: block;
+}
+.message.danger{
+    background-color: red;
+    color: white;
+    text-align: center;
+    display: block;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* ฟอนต์มาตรฐานที่อ่านง่าย */
     background-color: #f4f7f6; /* สีพื้นหลังหน้าเว็บ */
@@ -134,3 +153,4 @@ textarea {
 .button:active {
     transform: scale(0.98); /* ย่อลงเล็กน้อยเมื่อคลิก */
 }
+

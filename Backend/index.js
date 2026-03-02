@@ -23,8 +23,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const mysql = require('mysql2/promise');
 const port = 8000;
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 let users = []
 let counter = 1;

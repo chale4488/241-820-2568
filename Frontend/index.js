@@ -1,27 +1,45 @@
-function submitData(){
+const submitData = async () => {
     let firstNameDOM = document.querySelector('input[name="firstname"]');
     let lastNameDOM = document.querySelector('input[name="lastname"]');
     let ageDOM = document.querySelector('input[name="age"]');
-
     let genderDOM = document.querySelector('input[name="gender"]');
-    let interestsDOM = document.querySelectorAll('input[name="interest"]:checked');
+    let interestsDOM = document.querySelectorAll('input[name="interests"]:checked');
     let descriptionDOM = document.querySelector('textarea[name="description"]');
-
-    let interest = '';
-    for (let i = 0; i < interestsDOM.length; i++) {
-        interest += interestsDOM[i].value;
-        if(i != interestsDOM.length -1){
-            interest+=','
+    let messageDOM = document.getElementById('message');
+    try{
+        let interest = '';
+        for (let i = 0; i < interestsDOM.length; i++) {
+            interest += interestsDOM[i].value;
+            if(i != interestsDOM.length -1){
+                interest+=','
+            }
         }
+        let userData = {
+            firstName:firstNameDOM.value,
+            lastName:lastNameDOM.value,
+            age:ageDOM.value,
+            gender:genderDOM.value,
+            interests:interest,
+            description:descriptionDOM.value
     }
+    
+        const response = await axios.post('http://localhost:8000/users',userData);
+        console.log('response',response.data);
+        messageDOM.innerText = 'บันทึกข้อมูลสำเร็จ';
+        messageDOM.className = 'message success';
+            
 
-    let userData = {
-        firstName:firstNameDOM.value,
-        lastName:lastNameDOM.value,
-        age:ageDOM.value,
-        gender:genderDOM.value,
-        interest:interest,
-        descriptionDOM:descriptionDOM.value
+
+    }catch (error) {
+        if (error.response){
+            console.log('Error response:',error.response.data.message);
+        }
+        messageDOM.innerText = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล';
+        messageDOM.className = 'message danger';
+        
     }
-    console.log('Submit Data ',userData);
+    console.log('submitData',userData);
+
+    
+    
 }
