@@ -126,11 +126,39 @@ app.get('/users/:id',async (req,res)=>{
 //         user: user });
 // })
 
+const validateData = (userData) =>{
+    let errors = [];
+    if(!userData.firstname){
+        errors.push('กรุณากรอกชื่อ');
+    }
+    if(!userData.lastname){
+        errors.push('กรุณากรอกนามสกุล');
+    }
+    if(!userData.age){
+        errors.push('กรุณากรอกอายุ')
+    }
+    if(!userData.gender){
+        errors.push('กรุณาเลือกเพศ')
+    }
+    if(!userData.interests){
+        errors.push('กรุณาเลือกความสนใจอย่างน้อย 1 อย่าง')
+    }
+    if(!userData.description){
+        errors.push('กรุณากรอกคำอธิบายที่เกี่ยวกับคุณ')
+    } return errors;
+}
 
 //path new post
 app.post('/users',async (req,res) => {
     try{
         let user = req.body;
+        const errors = validateData(user);
+        if(errors.length > 0){
+            throw {
+                message:'กรอกข้อมูลไม่ครบถ้วน',
+                errors:errors
+            }
+        }
         const results = await conn.query('INSERT INTO users SET ?',user);
         console.log('results: ',results)
         res.json({ 
@@ -138,10 +166,12 @@ app.post('/users',async (req,res) => {
             data: results[0]
             });
     }catch (error){
+        const errorMessage = error.message || 'Error creating user'
+        const errors = error.errors || [];
         console.error('Error creating user: ',error);
         res.status(500).json({
-            message:' Error creating user',
-            error:error.message
+            message: errorMessage,
+            errors:errors
         });
     }
 });
